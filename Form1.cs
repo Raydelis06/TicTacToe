@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,8 +19,14 @@ namespace TicTacToe
         bool enTurno = true;
         bool esGanador = false;
 
+        bool hayCeldaLibre = true;
+
+        string rutaImagenJugador = " ";
+
         Jugador jugador;
-        string jugadorMaquina;
+        Image fichaElegida = null;
+        Image fichaMaquina = null;
+
 
         //0 - vacio, 1 - jugador, 2 - maquina
         int[,] tablero = new int[3, 3];
@@ -29,7 +36,6 @@ namespace TicTacToe
             InitializeComponent();
             jugador = new Jugador();
             jugarDeNuevo();
-            jugadorMaquina = "C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\o.png";
             celdas = new Button[3, 3] {
                 { c1f1, c2f1, c3f1 },
                 { c1f2, c2f2, c3f2 },
@@ -42,7 +48,7 @@ namespace TicTacToe
         {
             if (tablero[0,0] == 0 && enTurno)
             {
-                c1f1.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c1f1.BackgroundImage = fichaElegida;
                 tablero[0, 0] = 1;
                 pasarTurnoMaquinaAsync();
             }
@@ -55,7 +61,7 @@ namespace TicTacToe
         {
             if (tablero[1, 0] == 0 && enTurno)
             {
-                c1f2.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c1f2.BackgroundImage = fichaElegida;
                 tablero[1, 0] = 1;
                 pasarTurnoMaquinaAsync();
 
@@ -69,7 +75,7 @@ namespace TicTacToe
         {
             if (tablero[2, 0] == 0 && enTurno)
             {
-                c1f3.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c1f3.BackgroundImage = fichaElegida;
                 tablero[2, 0] = 1;
                 pasarTurnoMaquinaAsync();
             }
@@ -84,7 +90,7 @@ namespace TicTacToe
         {
             if (tablero[0, 1] == 0 && enTurno)
             {
-                c2f1.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c2f1.BackgroundImage = fichaElegida;
                 tablero[0, 1] = 1;
                 pasarTurnoMaquinaAsync();
             }
@@ -97,7 +103,7 @@ namespace TicTacToe
         {
             if (tablero[1, 1] == 0 && enTurno)
             {
-                c2f2.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c2f2.BackgroundImage = fichaElegida;
                 tablero[1, 1] = 1;
                 pasarTurnoMaquinaAsync();
             }
@@ -111,7 +117,7 @@ namespace TicTacToe
         {
             if (tablero[2, 1] == 0 && enTurno)
             {
-                c2f3.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c2f3.BackgroundImage = fichaElegida;
                 tablero[2, 1] = 1;
                 pasarTurnoMaquinaAsync();
             }
@@ -125,7 +131,7 @@ namespace TicTacToe
         {
             if (tablero[0, 2] == 0)
             {
-                c3f1.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c3f1.BackgroundImage = fichaElegida;
                 tablero[0, 2] = 1;
                 pasarTurnoMaquinaAsync();
 
@@ -139,7 +145,7 @@ namespace TicTacToe
         {
             if (tablero[1, 2] == 0)
             {
-                c3f2.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c3f2.BackgroundImage = fichaElegida;
                 tablero[1, 2] = 1;
                 pasarTurnoMaquinaAsync();
 
@@ -154,7 +160,7 @@ namespace TicTacToe
         {
             if (tablero[2, 2] == 0)
             {
-                c3f3.BackgroundImage = Image.FromFile(jugador.rutaImagen);
+                c3f3.BackgroundImage = fichaElegida;
                 tablero[2, 2] = 1;
                 pasarTurnoMaquinaAsync();
 
@@ -181,29 +187,41 @@ namespace TicTacToe
             esGanador = false;
             finalizada = false;
             enTurno = true;
+            hayCeldaLibre = true;
         }
         private void finJuego(bool esGanador)
         {
-            if(esGanador == true)
+            if (!hayCeldaLibre)
+            {
+                labelAviso.Text = "Empate";
+                panelAviso.Visible = true;
+                return;
+            }
+            else if (!esGanador && hayCeldaLibre)
+            {
+                panelAviso.Visible = true;
+                labelAviso.Text = "Has perdido";
+                return;
+
+            }
+            else if (esGanador)
             {
                 jugador.puntuacion += 20;
                 LabelPuntaje.Text = jugador.puntuacion.ToString();
                 panelAviso.Visible = true;
                 labelAviso.Text = "¡Felicidades!";
+                return;
+
             }
-            else
-            {
-                panelAviso.Visible = true;
-                labelAviso.Text = "Has perdido";
-            }
+
+
         }
         private void jugarDeNuevo()
         {
             limpiarTablero();
-            jugador.rutaImagen = "C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\x.png";
-            jugadorActual.Image = Image.FromFile(jugador.rutaImagen);
+            labelAviso.Text = " ";
+            rutaImagenJugador = jugador.rutaImagen;
         }
-
         private void botonAceptar_Click(object sender, EventArgs e)
         {
             panelAviso.Visible = false;
@@ -211,31 +229,38 @@ namespace TicTacToe
             {
                 jugarDeNuevo();
             }
+            if (enTurno)
+            {
+                jugadorActual.Image = fichaElegida;
+
+            }else
+                jugadorActual.Image = fichaMaquina;
+
         }
         private async Task pasarTurnoMaquinaAsync()
         {
-            enTurno = false;
-            await Task.Delay(300);
-            jugadorActual.Image = Image.FromFile(jugadorMaquina);
-            evaluarFinJuego();
-            if(finalizada)
-            {
-                finJuego(esGanador);
-                return;
-            }
-            await Task.Delay(2000);
-            generarJugada();
-            await Task.Delay(300);
-
-            jugadorActual.Image = Image.FromFile(jugador.rutaImagen);
+            //evalua si con la jugada se acaba el juego
             evaluarFinJuego();
             if (finalizada)
             {
                 finJuego(esGanador);
-                return ;
+                return;
             }
+            //si no se acaba, juega la maquina y se evalua su jugada
+            enTurno = false;
+            await Task.Delay(200);
+            jugadorActual.Image = fichaMaquina;
+            await Task.Delay(2000);
+            generarJugada();
+            evaluarFinJuego();
+            if (finalizada)
+            {
+                finJuego(esGanador);
+                return;
+            }
+            await Task.Delay(300);
+            jugadorActual.Image = fichaElegida;
             enTurno = true;
-
         }
         private void generarJugada()
         {
@@ -249,7 +274,7 @@ namespace TicTacToe
             } while (tablero[fila, columna] != 0 && !finalizada);
             tablero[fila, columna] = 2;
 
-            celdas[fila, columna].BackgroundImage = Image.FromFile(jugadorMaquina);
+            celdas[fila, columna].BackgroundImage = fichaMaquina;
 
         }
         private void evaluarFinJuego()
@@ -274,18 +299,62 @@ namespace TicTacToe
             }
 
             // 2. Evaluar Diagonales (fuera del bucle)
-            if (tablero[1, 1] != 0) // Si el centro está vacío, ninguna diagonal sirve
+            if (tablero[1, 1] != 0)
             {
                 if ((tablero[0, 0] == tablero[1, 1] && tablero[1, 1] == tablero[2, 2]) ||
                     (tablero[0, 2] == tablero[1, 1] && tablero[1, 1] == tablero[2, 0]))
                 {
                     finalizada = true;
                     esGanador = (tablero[1, 1] == 1);
+                    return;
                 }
             }
+            
+            hayCeldaLibre = tablero.Cast<int>().Any(celda => celda == 0);
+            if (!hayCeldaLibre)
+            {
+                finalizada = true;
+                finJuego(esGanador);
+            }
         }
-        // 0 0 0
-        // 0 0 0
-        // 0 0 0
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ficha_Click(object sender, EventArgs e)
+        {
+            if (sender.Equals(fichaX))
+            {
+                fichaX.BackgroundImage.Tag = "C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\x.png";
+                jugador.rutaImagen = fichaX.BackgroundImage.Tag.ToString();
+            }
+            else if (sender.Equals(fichaO))
+            {
+                fichaO.BackgroundImage.Tag = "C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\o.png";
+                jugador.rutaImagen = fichaO.BackgroundImage.Tag.ToString();
+            }
+            else
+                return;
+
+            fichaElegida = Image.FromFile(jugador.rutaImagen);
+            jugadorActual.Image = fichaElegida;
+
+            if (jugador.rutaImagen == "C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\o.png")
+            {
+
+                fichaMaquina = Image.FromFile("C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\x.png");
+
+            }
+            else
+            {
+                fichaMaquina = Image.FromFile("C:\\Users\\Raydelis Hilario\\source\\repos\\TicTacToe\\Resources\\o.png");
+
+            }
+            panelElegirXO.Visible = false;
+            jugarDeNuevo();
+        }
+        
     }
 }

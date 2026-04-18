@@ -41,10 +41,15 @@
             this.c3f2 = new System.Windows.Forms.Button();
             this.c3f3 = new System.Windows.Forms.Button();
             this.panelAviso = new System.Windows.Forms.Panel();
-            this.labelAviso = new System.Windows.Forms.Label();
             this.botonAceptar = new System.Windows.Forms.Button();
+            this.labelAviso = new System.Windows.Forms.Label();
+            this.panelElegirXO = new System.Windows.Forms.Panel();
+            this.fichaO = new System.Windows.Forms.Button();
+            this.fichaX = new System.Windows.Forms.Button();
+            this.labelElegirXO = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.jugadorActual)).BeginInit();
             this.panelAviso.SuspendLayout();
+            this.panelElegirXO.SuspendLayout();
             this.SuspendLayout();
             // 
             // LabelPuntaje
@@ -188,6 +193,16 @@
             this.panelAviso.TabIndex = 20;
             this.panelAviso.Visible = false;
             // 
+            // botonAceptar
+            // 
+            this.botonAceptar.Location = new System.Drawing.Point(215, 96);
+            this.botonAceptar.Name = "botonAceptar";
+            this.botonAceptar.Size = new System.Drawing.Size(118, 34);
+            this.botonAceptar.TabIndex = 1;
+            this.botonAceptar.Text = "Aceptar";
+            this.botonAceptar.UseVisualStyleBackColor = true;
+            this.botonAceptar.Click += new System.EventHandler(this.botonAceptar_Click);
+            // 
             // labelAviso
             // 
             this.labelAviso.AutoSize = true;
@@ -200,15 +215,51 @@
             this.labelAviso.TabIndex = 0;
             this.labelAviso.Text = "Jugada invalida.";
             // 
-            // botonAceptar
+            // panelElegirXO
             // 
-            this.botonAceptar.Location = new System.Drawing.Point(215, 96);
-            this.botonAceptar.Name = "botonAceptar";
-            this.botonAceptar.Size = new System.Drawing.Size(118, 34);
-            this.botonAceptar.TabIndex = 1;
-            this.botonAceptar.Text = "Aceptar";
-            this.botonAceptar.UseVisualStyleBackColor = true;
-            this.botonAceptar.Click += new System.EventHandler(this.botonAceptar_Click);
+            this.panelElegirXO.BackColor = System.Drawing.Color.White;
+            this.panelElegirXO.Controls.Add(this.fichaO);
+            this.panelElegirXO.Controls.Add(this.fichaX);
+            this.panelElegirXO.Controls.Add(this.labelElegirXO);
+            this.panelElegirXO.Location = new System.Drawing.Point(-1, -1);
+            this.panelElegirXO.Name = "panelElegirXO";
+            this.panelElegirXO.Size = new System.Drawing.Size(582, 645);
+            this.panelElegirXO.TabIndex = 21;
+            // 
+            // fichaO
+            // 
+            this.fichaO.BackgroundImage = global::TicTacToe.Properties.Resources.o;
+            this.fichaO.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fichaO.Location = new System.Drawing.Point(228, 347);
+            this.fichaO.Name = "fichaO";
+            this.fichaO.Size = new System.Drawing.Size(112, 111);
+            this.fichaO.TabIndex = 2;
+            this.fichaO.UseVisualStyleBackColor = true;
+            this.fichaO.Click += new System.EventHandler(this.ficha_Click);
+            // 
+            // fichaX
+            // 
+            this.fichaX.BackgroundImage = global::TicTacToe.Properties.Resources.x;
+            this.fichaX.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fichaX.Location = new System.Drawing.Point(228, 171);
+            this.fichaX.Name = "fichaX";
+            this.fichaX.Size = new System.Drawing.Size(112, 111);
+            this.fichaX.TabIndex = 1;
+            this.fichaX.UseVisualStyleBackColor = true;
+            this.fichaX.Click += new System.EventHandler(this.ficha_Click);
+            // 
+            // labelElegirXO
+            // 
+            this.labelElegirXO.AutoSize = true;
+            this.labelElegirXO.BackColor = System.Drawing.Color.Transparent;
+            this.labelElegirXO.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelElegirXO.ForeColor = System.Drawing.Color.Black;
+            this.labelElegirXO.Location = new System.Drawing.Point(155, 91);
+            this.labelElegirXO.Name = "labelElegirXO";
+            this.labelElegirXO.Size = new System.Drawing.Size(232, 37);
+            this.labelElegirXO.TabIndex = 0;
+            this.labelElegirXO.Text = "Elija una ficha";
+            this.labelElegirXO.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 
@@ -217,6 +268,7 @@
             this.BackgroundImage = global::TicTacToe.Properties.Resources.Diseño_sin_título__1_;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(578, 644);
+            this.Controls.Add(this.panelElegirXO);
             this.Controls.Add(this.panelAviso);
             this.Controls.Add(this.c3f3);
             this.Controls.Add(this.c3f2);
@@ -234,6 +286,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.jugadorActual)).EndInit();
             this.panelAviso.ResumeLayout(false);
             this.panelAviso.PerformLayout();
+            this.panelElegirXO.ResumeLayout(false);
+            this.panelElegirXO.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -254,6 +308,10 @@
         private System.Windows.Forms.Panel panelAviso;
         private System.Windows.Forms.Label labelAviso;
         private System.Windows.Forms.Button botonAceptar;
+        private System.Windows.Forms.Panel panelElegirXO;
+        private System.Windows.Forms.Button fichaX;
+        private System.Windows.Forms.Label labelElegirXO;
+        private System.Windows.Forms.Button fichaO;
     }
 }
 
